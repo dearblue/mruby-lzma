@@ -13,31 +13,37 @@ assert("LZMA - one step process") do
   assert_equal s, LZMA.decode(LZMA.encode(s, LZMA.delta(1), LZMA.lzma2(1)))
 end
 
-assert("LZMA - streaming process") do
-  d = ""
-  lzma = LZMA::Encoder.new(d)
-  lzma.close
-
-  assert_equal "", LZMA.decode(d)
-
-  d = ""
-  lzma = LZMA::Encoder.new(d, preset: 0)
-  t = 9
-  t.times { lzma.write s }
-  lzma.close
-
-  ss = s * t
-  dd = LZMA.decode(d)
-  assert_equal LZMA.crc64_hexdigest(ss), LZMA.crc64_hexdigest(dd)
-
-  LZMA::Decoder.open(d) do |xz|
-    assert_equal LZMA.crc64(ss.byteslice(0, 29)), LZMA.crc64(xz.read(29))
-    assert_equal LZMA.crc64(ss.byteslice(29, 49)), LZMA.crc64(xz.read(49))
-    assert_equal LZMA.crc64(ss.byteslice(78, 599)), LZMA.crc64(xz.read(599))
-    assert_equal LZMA.crc64(ss.byteslice(677..-1)), LZMA.crc64(xz.read)
+assert("LZMA - stream processing (huge)") do
+  unless (1 << 28).kind_of?(Integer)
+    skip "[mruby is build with MRB_INT16]"
   end
 
-  true
+  s = "123456789" * 11111111 + "ABCDEFG"
+  d = ""
+  LZMA::Encoder.wrap(d, preset: 1) do |lzma|
+    off = 0
+    slicesize = 777777
+    while off < s.bytesize
+      assert_equal lzma, lzma.write(s.byteslice(off, slicesize))
+      off += slicesize
+      slicesize = slicesize * 3 + 7
+    end
+  end
+
+  assert_equal s.hash, LZMA.decode(d, s.bytesize).hash
+  assert_equal s.hash, LZMA.decode(d).hash
+
+  LZMA::Decoder.wrap(d) do |lzma|
+    off = 0
+    slicesize = 3
+    while off < s.bytesize
+      assert_equal s.byteslice(off, slicesize).hash, lzma.read(slicesize).hash
+      off += slicesize
+      slicesize = slicesize * 2 + 3
+    end
+
+    assert_equal nil.hash, lzma.read(slicesize).hash
+  end
 end
 
 assert("LZMA - one step process as raw stream") do

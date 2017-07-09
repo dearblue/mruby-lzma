@@ -1465,7 +1465,7 @@ dec_read(MRB, VALUE self)
     }
     RSTR_SET_LEN(RSTRING(dest), 0);
     p->stream.next_out = (uint8_t *)RSTRING_PTR(dest);
-    p->stream.avail_out = RSTRING_CAPA(dest);
+    p->stream.avail_out = (size > 0 ? size : RSTRING_CAPA(dest));
 
     while (p->stream.avail_out > 0) {
         if (p->stream.avail_in == 0) {
@@ -1477,7 +1477,7 @@ dec_read(MRB, VALUE self)
                 p->stream.next_in = NULL;
                 p->stream.avail_in = 0;
                 lzma_ret s = lzma_code(&p->stream, LZMA_FINISH);
-                RSTR_SET_LEN(RSTRING(dest), RSTRING_CAPA(dest) - p->stream.avail_out);
+                RSTR_SET_LEN(RSTRING(dest), (size > 0 ? size : RSTRING_CAPA(dest)) - p->stream.avail_out);
                 aux_set_srcbuf(mrb, self, src);
                 if (s != LZMA_STREAM_END) {
                     aux_check_error(mrb, s, "lzma_code");
@@ -1490,7 +1490,7 @@ dec_read(MRB, VALUE self)
         }
 
         lzma_ret s = lzma_code(&p->stream, LZMA_RUN);
-        RSTR_SET_LEN(RSTRING(dest), RSTRING_CAPA(dest) - p->stream.avail_out);
+        RSTR_SET_LEN(RSTRING(dest), (size > 0 ? size : RSTRING_CAPA(dest)) - p->stream.avail_out);
         if (s == LZMA_STREAM_END) { break; }
         if (s != LZMA_OK) {
             aux_set_srcbuf(mrb, self, src);
