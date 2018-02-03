@@ -1,7 +1,7 @@
 # mruby-lzma : mruby bindings for lzma (xz) the compression library (unofficial)
 
   * Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
-  * Version: 0.1
+  * Version: 0.2
   * Product quality: PROTOTYPE
   * Author: dearblue (mailto:dearblue@users.noreply.github.com)
   * Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
