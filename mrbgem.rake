@@ -5,8 +5,10 @@ MRuby::Gem::Specification.new("mruby-lzma") do |s|
   s.author  = "dearblue"
   s.homepage = "https://github.com/dearblue/mruby-lzma"
 
-  add_dependency "mruby-error"
-  add_dependency "mruby-string-ext"
+  add_dependency "mruby-error", core: "mruby-error"
+  add_dependency "mruby-string-ext", core: "mruby-string-ext"
+  add_dependency "mruby-aux", github: "dearblue/mruby-aux"
+  add_dependency "mruby-aux-scanhash", github: "dearblue/mruby-aux-scanhash"
 
   if s.cc.command =~ /\b(?:g?cc|clang)\d*\b/
     s.cc.flags << "-Wall" <<

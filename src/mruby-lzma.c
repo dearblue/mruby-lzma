@@ -8,8 +8,9 @@
 #include <mruby/error.h>
 #include <stdlib.h>
 #include <lzma.h>
-#include "extdefs.h"
-#include "mrbx_kwargs.h"
+#include <mruby-aux.h>
+#include <mruby-aux/scanhash.h>
+#include <string.h>
 
 
 #ifndef AUX_LZMA_PARTIAL_SIZE
@@ -531,7 +532,7 @@ aux_read(MRB, VALUE inport, size_t size, VALUE buf, size_t *offset)
         }
     } else {
         buf = aux_str_reserve(mrb, buf, size);
-        return FUNCALLC(mrb, inport, "read", mrb_fixnum_value(size), buf);
+        return FUNCALL(mrb, inport, "read", mrb_fixnum_value(size), buf);
     }
 }
 
@@ -1041,7 +1042,7 @@ enc_initialize(MRB, VALUE self)
 
     aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
     if (RSTRING_LEN(destbuf) > 0) {
-        FUNCALLC(mrb, outport, "<<", destbuf);
+        FUNCALL(mrb, outport, "<<", destbuf);
     }
 
     aux_check_error(mrb, s, "lzma_stream_encoder");
@@ -1084,7 +1085,7 @@ enc_write(MRB, VALUE self)
         lzma_ret s = lzma_code(&p->stream, LZMA_RUN);
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALLC(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, "<<", destbuf);
         }
 
         aux_check_error(mrb, s, "lzma_code");
@@ -1128,7 +1129,7 @@ enc_sync(MRB, VALUE self)
 
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALLC(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, "<<", destbuf);
         }
 
         if (s == LZMA_STREAM_END) { break; }
@@ -1171,7 +1172,7 @@ enc_close(MRB, VALUE self)
 
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALLC(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, "<<", destbuf);
         }
 
         if (s == LZMA_STREAM_END) { break; }
