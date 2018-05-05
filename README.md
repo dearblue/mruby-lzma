@@ -1,17 +1,5 @@
 # mruby-lzma : mruby bindings for lzma (xz) the compression library (unofficial)
 
-  * Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
-  * Version: 0.2
-  * Product quality: PROTOTYPE
-  * Author: dearblue (mailto:dearblue@users.noreply.github.com)
-  * Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
-  * Licensing: BSD-2-Clause License
-  * Dependency external mrbgems: (NONE)
-  * Dependency C libraries:
-      * liblzma in [XZ Utils](https://tukaani.org/xz/)
-        under [Public Domain](https://git.tukaani.org/?p=xz.git;a=blob;f=COPYING)
-        by Lasse Collin
-
 mruby へ LZMA/XZ 圧縮ライブラリの機能を提供します。
 
 
@@ -59,3 +47,21 @@ check_method = :sha256 # OR :none, :crc32, :crc64, nil (crc64)
 
 dest = LZMA.encode(src, filter1, filter2, check: check_method)
 ```
+
+
+## Specification
+
+  * Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
+  * Version: 0.2
+  * Product quality: PROTOTYPE
+  * Author: dearblue (mailto:dearblue@users.noreply.github.com)
+  * Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
+  * Licensing: BSD-2-Clause License
+  * Dependency external mrbgems:
+      * [mruby-aux](https://github.com/dearblue/mruby-aux)
+        under [Creative Commons Zero License \(CC0\)](https://github.com/dearblue/mruby-aux/blob/master/LICENSE)
+        by [dearblue](https://github.com/dearblue)
+  * Dependency C libraries:
+      * liblzma in [XZ Utils](https://tukaani.org/xz/)
+        under [Public Domain](https://git.tukaani.org/?p=xz.git;a=blob;f=COPYING)
+        by Lasse Collin
