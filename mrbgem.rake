@@ -1,6 +1,6 @@
 MRuby::Gem::Specification.new("mruby-lzma") do |s|
   s.summary = "mruby bindings for lzma the compression library (unofficial)"
-  s.version = "0.2"
+  s.version = File.read(File.join(File.dirname(__FILE__), "README.md")).scan(/^\s*[\-\*] version:\s*(\d+(?:\.\d+)+)/i).flatten[-1]
   s.license = "BSD-2-Clause"
   s.author  = "dearblue"
   s.homepage = "https://github.com/dearblue/mruby-lzma"

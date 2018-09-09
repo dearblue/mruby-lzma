@@ -505,7 +505,9 @@ aux_decoder_options(MRB, mrb_int argc, VALUE *argv, uint64_t *memlimit, uint32_t
         *flags = (NIL_P(values[1]) || !mrb_bool(values[1]) ? 0 : LZMA_TELL_NO_CHECK) |
                  (NIL_P(values[2]) || !mrb_bool(values[2]) ? 0 : LZMA_TELL_UNSUPPORTED_CHECK) |
                  (NIL_P(values[3]) || !mrb_bool(values[3]) ? 0 : LZMA_TELL_ANY_CHECK) |
+#ifdef LZMA_IGNORE_CHECK
                  (NIL_P(values[4]) || !mrb_bool(values[4]) ? 0 : LZMA_IGNORE_CHECK) |
+#endif
                  (NIL_P(values[5]) || !mrb_bool(values[5]) ? 0 : LZMA_CONCATENATED);
     } else {
         *memlimit = 0;

@@ -52,11 +52,11 @@ dest = LZMA.encode(src, filter1, filter2, check: check_method)
 ## Specification
 
   * Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
-  * Version: 0.2
+  * Version: 0.3
   * Product quality: PROTOTYPE
-  * Author: dearblue (mailto:dearblue@users.noreply.github.com)
+  * Author: [dearblue](https://github.com/dearblue)
   * Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
-  * Licensing: BSD-2-Clause License
+  * Licensing: [2 clause BSD License](LICENSE)
   * Dependency external mrbgems:
       * [mruby-aux](https://github.com/dearblue/mruby-aux)
         under [Creative Commons Zero License \(CC0\)](https://github.com/dearblue/mruby-aux/blob/master/LICENSE)
