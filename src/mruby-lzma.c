@@ -33,6 +33,9 @@
 #define CLAMP(n, min, max) (n < min ? min : (n > max ? max : n))
 #define CLAMP_MAX(n, max) (n > max ? max : n)
 
+#define ID_op_lshift mrb_intern_lit(mrb, "<<")
+#define ID_read mrb_intern_lit(mrb, "read")
+
 #define id_initialize   mrb_intern_lit(mrb, "initialize")
 #define id_none     mrb_intern_lit(mrb, "none")
 #define id_crc32    mrb_intern_lit(mrb, "crc32")
@@ -534,7 +537,7 @@ aux_read(MRB, VALUE inport, size_t size, VALUE buf, size_t *offset)
         }
     } else {
         buf = aux_str_reserve(mrb, buf, size);
-        return FUNCALL(mrb, inport, "read", mrb_fixnum_value(size), buf);
+        return FUNCALL(mrb, inport, ID_read, mrb_fixnum_value(size), buf);
     }
 }
 
@@ -1044,7 +1047,7 @@ enc_initialize(MRB, VALUE self)
 
     aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
     if (RSTRING_LEN(destbuf) > 0) {
-        FUNCALL(mrb, outport, "<<", destbuf);
+        FUNCALL(mrb, outport, ID_op_lshift, destbuf);
     }
 
     aux_check_error(mrb, s, "lzma_stream_encoder");
@@ -1087,7 +1090,7 @@ enc_write(MRB, VALUE self)
         lzma_ret s = lzma_code(&p->stream, LZMA_RUN);
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALL(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, ID_op_lshift, destbuf);
         }
 
         aux_check_error(mrb, s, "lzma_code");
@@ -1131,7 +1134,7 @@ enc_sync(MRB, VALUE self)
 
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALL(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, ID_op_lshift, destbuf);
         }
 
         if (s == LZMA_STREAM_END) { break; }
@@ -1174,7 +1177,7 @@ enc_close(MRB, VALUE self)
 
         aux_str_set_len(mrb, destbuf, RSTRING_CAPA(destbuf) - p->stream.avail_out);
         if (RSTRING_LEN(destbuf) > 0) {
-            FUNCALL(mrb, outport, "<<", destbuf);
+            FUNCALL(mrb, outport, ID_op_lshift, destbuf);
         }
 
         if (s == LZMA_STREAM_END) { break; }
