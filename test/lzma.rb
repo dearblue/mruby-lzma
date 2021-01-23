@@ -14,13 +14,9 @@ assert("LZMA - one step process") do
 end
 
 assert("LZMA - stream processing (huge)") do
-  unless (1 << 28).kind_of?(Integer)
-    skip "[mruby is build with MRB_INT16]"
-  end
-
-  s = "123456789" * 11111111 + "ABCDEFG"
+  s = "123456789" * 1111111 + "ABCDEFG"
   d = ""
-  LZMA::Encoder.wrap(d, preset: 1) do |lzma|
+  LZMA::Encoder.wrap(d, preset: 0) do |lzma|
     off = 0
     slicesize = 777777
     while off < s.bytesize
@@ -51,7 +47,7 @@ assert("LZMA - one step process as raw stream") do
 
   s = "123456789" * 99999
   d = ""
-  filter = [LZMA.delta, LZMA.lzma2(9, dictsize: 4 << 20)]
+  filter = [LZMA.delta, LZMA.lzma2(1, dictsize: 4 << 20)]
   assert_equal d.object_id, LZMA.raw_encode(s, d, *filter).object_id
   assert_equal d.object_id, LZMA.raw_decode(LZMA.raw_encode(s, *filter), d, *filter).object_id
   assert_equal s, LZMA.raw_decode(LZMA.raw_encode(s, *filter), *filter)
