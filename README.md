@@ -51,17 +51,17 @@ dest = LZMA.encode(src, filter1, filter2, check: check_method)
 
 ## Specification
 
-  * Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
-  * Version: 0.3.1
-  * Product quality: PROTOTYPE
-  * Author: [dearblue](https://github.com/dearblue)
-  * Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
-  * Licensing: [2 clause BSD License](LICENSE)
-  * Dependency external mrbgems:
-      * [mruby-aux](https://github.com/dearblue/mruby-aux)
+  - Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
+  - Version: 0.3.1
+  - Product quality: PROTOTYPE
+  - Author: [dearblue](https://github.com/dearblue)
+  - Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
+  - Licensing: [2 clause BSD License](LICENSE)
+  - Dependency external mrbgems:
+      - [mruby-aux](https://github.com/dearblue/mruby-aux)
         under [Creative Commons Zero License \(CC0\)](https://github.com/dearblue/mruby-aux/blob/master/LICENSE)
         by [dearblue](https://github.com/dearblue)
-  * Dependency C libraries:
-      * liblzma in [XZ Utils](https://tukaani.org/xz/)
+  - Dependency C libraries:
+      - liblzma in [XZ Utils](https://tukaani.org/xz/)
         under [Public Domain](https://git.tukaani.org/?p=xz.git;a=blob;f=COPYING)
         by Lasse Collin
