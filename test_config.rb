@@ -1,7 +1,7 @@
-MRuby::Build.new("host") do |conf|
-  toolchain :clang
+MRuby::Lockfile.disable rescue nil
 
-  conf.build_dir = "host32"
+MRuby::Build.new("host", "test-build") do |conf|
+  toolchain :clang
 
   enable_debug
   enable_test
@@ -12,10 +12,8 @@ MRuby::Build.new("host") do |conf|
   gem "."
 end
 
-MRuby::Build.new("host-nan32") do |conf|
+MRuby::Build.new("host-nan", "test-build") do |conf|
   toolchain :clang
-
-  conf.build_dir = conf.name
 
   cc.defines << %w(MRB_NAN_BOXING)
 
