@@ -52,7 +52,7 @@ dest = LZMA.encode(src, filter1, filter2, check: check_method)
 ## Specification
 
   - Product name: [mruby-lzma](https://github.com/dearblue/mruby-lzma)
-  - Version: 0.3.1
+  - Version: 0.3.2
   - Product quality: PROTOTYPE
   - Author: [dearblue](https://github.com/dearblue)
   - Report issue to: <https://github.com/dearblue/mruby-lzma/issues>
